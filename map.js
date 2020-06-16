@@ -19,7 +19,7 @@ let pPosR = playerObj.playerPosRow;
 let pPosC = playerObj.playerPosCol;
 
 const init = () => { // initialising variables
-  pPosR = 1; // player start from the bottom left side
+  pPosR = 1; // 1, 1, player start from the bottom left side
   pPosC = 1;
 };
 
@@ -62,7 +62,7 @@ const movePlayerRight = (arr) => {
     pPosC++;
     arr[pPosR][pPosC] = PLAYERSIGN;
     arr[pPosR][pPosC - 1] = EMPTYBRICK;
-    fallingPlayer();
+    fallingPlayer(arr);
   }
 };
 
@@ -71,6 +71,7 @@ const movePlayerLeft = (arr) => {
     pPosC--;
     arr[pPosR][pPosC] = PLAYERSIGN;
     arr[pPosR][pPosC + 1] = EMPTYBRICK;
+    fallingPlayer(arr);
   }
 };
 
@@ -78,13 +79,15 @@ const jumpPlayer = (arr) => { // jumping only up
   if ((arr[pPosR - 1][pPosC] || arr[pPosR - 2][pPosC]) !== TOPSIDEBRICK) {
     pPosR -= 2;
     arr[pPosR][pPosC] = PLAYERSIGN;
-    arr[pPosR + 1][pPosC] = EMPTYBRICK;
+    arr[pPosR + 2][pPosC] = EMPTYBRICK;
   }
 };
 
 const fallingPlayer = (arr) => {
   while (arr[pPosR + 1][pPosC] !== (BOTTOMBRICK || PLATFORMBRICK)) {
     pPosR++;
+    arr[pPosR][pPosC] = PLAYERSIGN;
+    arr[pPosR - 1][pPosC] = EMPTYBRICK;
   }
 };
 
