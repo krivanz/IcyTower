@@ -1,12 +1,10 @@
 const map = require('./map');
-const player = require('./player');
-const arr = new Array();
 
 const main = () => {
   const arr = map.generateMap();
   map.fillMapSides(arr);
-  player.init();
-  player.addPlayer(arr);
+  map.init();
+  map.addPlayer(arr);
 
   setInterval(() => {
     console.clear();
@@ -33,10 +31,6 @@ const main = () => {
       console.log('ugrás');
     }
   });
-};
-
-module.exports = {
-  arr
 };
 
 main();

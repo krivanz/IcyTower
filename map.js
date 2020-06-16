@@ -62,33 +62,29 @@ const movePlayerRight = (arr) => {
     pPosC++;
     arr[pPosR][pPosC] = PLAYERSIGN;
     arr[pPosR][pPosC - 1] = EMPTYBRICK;
-    arr[pPosR][pPosC] = PLAYERSIGN;
+    fallingPlayer();
   }
 };
 
 const movePlayerLeft = (arr) => {
   if (arr[pPosR][pPosC - 1] !== LEFTSIDEBRICK) {
-    playerObj.playerSign = PLAYERSIGNONMOVE;
     pPosC--;
-    arr[pPosR][pPosC] = playerObj.playerSign;
+    arr[pPosR][pPosC] = PLAYERSIGN;
     arr[pPosR][pPosC + 1] = EMPTYBRICK;
-
-    playerObj.playerSign = PLAYERSIGNONSTOP;
-    arr[pPosR][pPosC] = playerObj.playerSign;
   }
 };
 
 const jumpPlayer = (arr) => { // jumping only up
   if ((arr[pPosR - 1][pPosC] || arr[pPosR - 2][pPosC]) !== TOPSIDEBRICK) {
     pPosR -= 2;
-    arr[pPosR][pPosC] = playerObj.playerSign;
+    arr[pPosR][pPosC] = PLAYERSIGN;
     arr[pPosR + 1][pPosC] = EMPTYBRICK;
   }
 };
 
 const fallingPlayer = (arr) => {
   while (arr[pPosR + 1][pPosC] !== (BOTTOMBRICK || PLATFORMBRICK)) {
-    pPosR--;
+    pPosR++;
   }
 };
 
