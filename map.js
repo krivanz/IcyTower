@@ -37,11 +37,11 @@ const fillMapSides = (arr) => { // fill the map sides with different bricks on e
       if (i === 0) {
         arr[i][j] = TOPSIDEBRICK;
       } else if (i !== 0 && j === 0) {
-        arr[i][j] = LEFTSIDEBRICK;
+        arr[i][j] = PLATFORMBRICK;
       } else if (i !== 0 && j === (arr[i].length - 1)) {
-        arr[i][j] = RIGHTSIDEBRICK;
+        arr[i][j] = PLATFORMBRICK;
       } else if (i === arr.length - 1) {
-        arr[i][j] = BOTTOMBRICK;
+        arr[i][j] = PLATFORMBRICK; // PLATFOTMBRICK INSTEAD OF BOTTOMBRICK
       } else {
         arr[i][j] = EMPTYBRICK;
       }
@@ -67,7 +67,7 @@ const addPlayer = (arr) => {
 };
 
 const movePlayerRight = (arr) => {
-  if (arr[pPosR][pPosC + 1] !== RIGHTSIDEBRICK) {
+  if (arr[pPosR][pPosC + 1] !== PLATFORMBRICK) {
     pPosC++;
     arr[pPosR][pPosC] = PLAYERSIGN;
     arr[pPosR][pPosC - 1] = EMPTYBRICK;
@@ -76,7 +76,7 @@ const movePlayerRight = (arr) => {
 };
 
 const movePlayerLeft = (arr) => {
-  if (arr[pPosR][pPosC - 1] !== LEFTSIDEBRICK) {
+  if (arr[pPosR][pPosC - 1] !== PLATFORMBRICK) {
     pPosC--;
     arr[pPosR][pPosC] = PLAYERSIGN;
     arr[pPosR][pPosC + 1] = EMPTYBRICK;
@@ -93,7 +93,7 @@ const jumpPlayer = (arr) => { // jumping only up
 };
 
 const fallingPlayer = (arr) => {
-  while (arr[pPosR + 1][pPosC] !== (BOTTOMBRICK || PLATFORMBRICK)) {
+  while (arr[pPosR + 1][pPosC] !== PLATFORMBRICK) {
     pPosR++;
     arr[pPosR][pPosC] = PLAYERSIGN;
     arr[pPosR - 1][pPosC] = EMPTYBRICK;
