@@ -5,6 +5,7 @@ const main = () => {
   map.fillMapSides(arr);
   map.init();
   map.addPlayer(arr);
+  map.creatingPlatforms(arr);
 
   setInterval(() => {
     console.clear();

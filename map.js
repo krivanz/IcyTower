@@ -1,6 +1,6 @@
 const table = require('table');
 
-const MAPWIDTH = 5;
+const MAPWIDTH = 8;
 const MAPHEIGHT = 8;
 const PLAYERSIGN = 'O';
 const PLATFORMBRICK = '*';
@@ -53,6 +53,15 @@ const printMap = (arr) => {
   console.log(table.table(arr));
 };
 
+const creatingPlatforms = (arr) => {
+  for (let i = 2; i < arr.length; i += 2) {
+    for (let j = 1; j < arr[i].length - 1; j++) {
+      const k = Math.floor(Math.random() * (arr[0].length - 1) + 1);
+      arr[i][k] = PLATFORMBRICK;
+    }
+  }
+};
+
 const addPlayer = (arr) => {
   arr[pPosR][pPosC] = PLAYERSIGN;
 };
@@ -100,6 +109,7 @@ module.exports = {
   generateMap,
   fillMapSides,
   printMap,
+  creatingPlatforms,
   moveMap,
   addPlayer,
   movePlayerRight,
