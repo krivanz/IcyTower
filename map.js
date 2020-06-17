@@ -1,7 +1,7 @@
 const table = require('table');
 
-const MAPWIDTH = 8;
-const MAPHEIGHT = 8;
+const MAPWIDTH = 10;
+const MAPHEIGHT = 10;
 const PLAYERSIGN = 'O';
 const PLATFORMBRICK = '*';
 const LEFTSIDEBRICK = '#';
@@ -68,27 +68,53 @@ const addPlayer = (arr) => {
 
 const movePlayerRight = (arr) => {
   if (arr[pPosR][pPosC + 1] !== PLATFORMBRICK) {
+    arr[pPosR][pPosC] = EMPTYBRICK;
     pPosC++;
     arr[pPosR][pPosC] = PLAYERSIGN;
-    arr[pPosR][pPosC - 1] = EMPTYBRICK;
+    //    arr[pPosR][pPosC - 1] = EMPTYBRICK;
     fallingPlayer(arr);
   }
 };
 
 const movePlayerLeft = (arr) => {
   if (arr[pPosR][pPosC - 1] !== PLATFORMBRICK) {
+    arr[pPosR][pPosC] = EMPTYBRICK;
     pPosC--;
     arr[pPosR][pPosC] = PLAYERSIGN;
-    arr[pPosR][pPosC + 1] = EMPTYBRICK;
+    // arr[pPosR][pPosC + 1] = EMPTYBRICK;
     fallingPlayer(arr);
   }
 };
 
-const jumpPlayer = (arr) => { // jumping only up
+const jumpPlayerUp = (arr) => { // jumping only up
   if ((arr[pPosR - 1][pPosC] || arr[pPosR - 2][pPosC]) !== TOPSIDEBRICK) {
+    arr[pPosR][pPosC] = EMPTYBRICK;
     pPosR -= 2;
     arr[pPosR][pPosC] = PLAYERSIGN;
-    arr[pPosR + 2][pPosC] = EMPTYBRICK;
+    // arr[pPosR + 2][pPosC] = EMPTYBRICK;
+    fallingPlayer(arr);
+  }
+};
+
+const jumpPlayerUpLeft = (arr) => { // jumping 2 brick up an 1 brick left
+  if ((arr[pPosR - 1][pPosC] || arr[pPosR - 2][pPosC]) !== TOPSIDEBRICK) {
+    arr[pPosR][pPosC] = EMPTYBRICK;
+    pPosR -= 2;
+    pPosC -= 1;
+    arr[pPosR][pPosC] = PLAYERSIGN;
+    //    arr[pPosR + 2][pPosC + 1] = EMPTYBRICK;
+    fallingPlayer(arr);
+  }
+};
+
+const jumpPlayerUpRight = (arr) => { // jumping 2 brick up an 1 brick right
+  if ((arr[pPosR - 1][pPosC] || arr[pPosR - 2][pPosC]) !== TOPSIDEBRICK) {
+    arr[pPosR][pPosC] = EMPTYBRICK;
+    pPosR -= 2;
+    pPosC += 1;
+    arr[pPosR][pPosC] = PLAYERSIGN;
+    // arr[pPosR + 2][pPosC - 1] = EMPTYBRICK;
+    fallingPlayer(arr);
   }
 };
 
@@ -114,6 +140,8 @@ module.exports = {
   addPlayer,
   movePlayerRight,
   movePlayerLeft,
-  jumpPlayer,
+  jumpPlayerUp,
+  jumpPlayerUpLeft,
+  jumpPlayerUpRight,
   fallingPlayer
 };

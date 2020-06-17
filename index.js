@@ -10,13 +10,14 @@ const main = () => {
   setInterval(() => {
     console.clear();
     map.printMap(arr);
+    console.log(' balra: a, jobbra: d, ugrás fel: w, ugrás balra fel: q, ugrás jobbra fel: e kilépés: x');
   }, 1000);
   const stdin = process.stdin;
   stdin.setRawMode(true); // dont wait for enter
   stdin.resume(); // exit only with process.exit
   stdin.setEncoding('utf8'); // characters return
   stdin.on('data', (key) => {
-    if (key === 'q') {
+    if (key === 'x') {
       process.exit();
     }
     if (key === 'a') {
@@ -28,8 +29,16 @@ const main = () => {
       console.log('jobbra megy');
     }
     if (key === 'w') {
-      map.jumpPlayer(arr);
-      console.log('ugrás');
+      map.jumpPlayerUp(arr);
+      console.log('ugrás fel');
+    }
+    if (key === 'q') {
+      map.jumpPlayerUpLeft(arr);
+      console.log('ugrás balra fel');
+    }
+    if (key === 'e') {
+      map.jumpPlayerUpRight(arr);
+      console.log('ugrás jobbra fel');
     }
   });
 };
