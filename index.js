@@ -1,4 +1,5 @@
 const map = require('./map');
+const table = require('table');
 
 const main = () => {
   const arr = map.generateMap();
@@ -9,8 +10,10 @@ const main = () => {
 
   setInterval(() => {
     console.clear();
-    map.printMap(arr);
-    console.log(' balra: a, jobbra: d, ugrás fel: w, ugrás balra fel: q, ugrás jobbra fel: e kilépés: x');
+    // map.printMap(arr);
+    map.printMapAxel(arr);
+
+    console.log('\n balra: a, jobbra: d, ugrás fel: w, ugrás balra fel: q, ugrás jobbra fel: e kilépés: x');
   }, 1000);
   const stdin = process.stdin;
   stdin.setRawMode(true); // dont wait for enter
