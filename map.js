@@ -11,18 +11,17 @@ pótolni
 */
 const axel = require('axel');
 const table = require('table');
-const chalk = require('chalk');
 
 const MAPWIDTH = 50;
-const MAPHEIGHT = 20;
-const PLAYERSIGN = 'W';// '[[W],[W]],[[W],[W]]';
-const PLATFORMBRICK = '=';
+const MAPHEIGHT = 19; // ddd
+const PLAYERSIGN = '☻';// ♂ ¥ ♥ ☻'[[W],[W]],[[W],[W]]';
+const PLATFORMBRICK = '▓'; // ▀
 const LEFTSIDEBRICK = '#';
 const RIGHTSIDEBRICK = '@';
 const TOPSIDEBRICK = '&';
 const BOTTOMBRICK = '^';
 const EMPTYBRICK = ' ';
-const speed = 1000;
+const speed = 100;
 const playerObj = {
   playerPosCol: 1,
   playerPosRow: 1
@@ -32,8 +31,8 @@ let pPosR = playerObj.playerPosRow;
 let pPosC = playerObj.playerPosCol;
 
 const init = () => { // initialising variables
-  pPosR = 1; // 1, 1, player start from the bottom left side
-  pPosC = 1;
+  pPosR = 17; // 1, 1, player start from the bottom left side
+  pPosC = 10;
 };
 
 const generateMap = () => {
@@ -48,7 +47,7 @@ const fillMapSides = (arr) => { // fill the map sides with different bricks on e
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (i === 0) {
-        arr[i][j] = TOPSIDEBRICK;
+        arr[i][j] = TOPSIDEBRICK; // top side
       } else if (i !== 0 && j === 0) {
         arr[i][j] = PLATFORMBRICK;
       } else if (i !== 0 && j === (arr[i].length - 1)) {
@@ -70,16 +69,19 @@ const printMapAxel = (arr) => {
   axel.clear();
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
-      axel.bg(0, 0);
+      axel.bg(0, 0, 0);
+      if (arr[i][j] === TOPSIDEBRICK) {
+        axel.point(j + 1, i + 1, TOPSIDEBRICK);
+      }
       if (arr[i][j] === EMPTYBRICK) {
         axel.point(j + 1, i + 1, EMPTYBRICK);
       }
       if (arr[i][j] === PLATFORMBRICK) {
-        axel.fg(255, 255, 255);
+        axel.fg(255, 0, 255);
         axel.text(j + 1, i + 1, PLATFORMBRICK);
       }
       if (arr[i][j] === PLAYERSIGN) {
-        axel.fg(255, 0, 0);
+        axel.fg(255, 255, 0);
         axel.text(j + 1, i + 1, PLAYERSIGN);
       }
     }
@@ -131,14 +133,16 @@ const jumpPlayerUp = (arr) => { // jumping only up
 };
 
 const jumpPlayerUpLeft = (arr) => { // jumping 2 brick up an 1 brick left
-  if ((arr[pPosR - 1][pPosC] || arr[pPosR - 2][pPosC]) !== TOPSIDEBRICK) {
-    arr[pPosR][pPosC] = EMPTYBRICK;
-    pPosR -= 2;
-    pPosC -= 1;
-    arr[pPosR][pPosC] = PLAYERSIGN;
-    //    arr[pPosR + 2][pPosC + 1] = EMPTYBRICK;
-    fallingPlayer(arr);
-  }
+  setTimeout(() => {
+    if ((arr[pPosR - 1][pPosC] || arr[pPosR - 2][pPosC]) !== TOPSIDEBRICK) {
+      arr[pPosR][pPosC] = EMPTYBRICK;
+      pPosR -= 2;
+      pPosC -= 1;
+      arr[pPosR][pPosC] = PLAYERSIGN;
+      //    arr[pPosR + 2][pPosC + 1] = EMPTYBRICK;
+      fallingPlayer(arr);
+    }
+  }, 50);
 };
 
 const jumpPlayerUpRight = (arr) => { // jumping 2 brick up an 1 brick right
@@ -160,8 +164,25 @@ const fallingPlayer = (arr) => {
   }
 };
 
-const moveMap = (arr) => {
+const sinkMap = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    arr[i - 1] = arr[i];
+  }
+};
 
+const newMapRow = (arr) => {
+
+};
+
+const printPlayer = (arr) => {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
+      if (arr[i][j] === PLAYERSIGN) {
+        axel.fg(255, 255, 0);
+        axel.text(j + 1, i + 1, PLAYERSIGN);
+      }
+    }
+  }
 };
 
 module.exports = {
@@ -171,12 +192,13 @@ module.exports = {
   printMap,
   printMapAxel,
   creatingPlatforms,
-  moveMap,
+  sinkMap,
   addPlayer,
   movePlayerRight,
   movePlayerLeft,
   jumpPlayerUp,
   jumpPlayerUpLeft,
   jumpPlayerUpRight,
-  fallingPlayer
+  fallingPlayer,
+  printPlayer
 };
