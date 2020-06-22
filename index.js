@@ -4,8 +4,8 @@ const table = require('table');
 const main = () => {
   const arr = map.generateMap();
   map.fillMapSides(arr);
-  map.init();
   map.addPlayer(arr);
+  map.fallingPlayer(arr);
   map.creatingPlatforms(arr);
 
   const stdin = process.stdin;
@@ -16,7 +16,10 @@ const main = () => {
 
   setInterval(() => {
     map.printPlayer(arr);
-  }, 100);
+    map.sinkMap(arr);
+    map.newMapRow(arr);
+    map.printMapAxel(arr);
+  }, 5000);
 
   setInterval(() => {
     console.clear();
@@ -25,7 +28,9 @@ const main = () => {
     // map.sinkMap(arr);
 
     console.log('\n balra: a, jobbra: d, ugrás fel: w, ugrás balra fel: q, ugrás jobbra fel: e kilépés: x');
+    console.log('Játékos helyzete' + map.playerObj.posX + ' ' + map.playerObj.posY); // HIBA ezt ellenőrzés miatt raktam be, de valamiért nem működik
   }, 500);
+
   stdin.on('data', (key) => {
     if (key === 'x') {
       process.exit();
