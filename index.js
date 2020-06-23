@@ -1,18 +1,24 @@
 const map = require('./map');
 const table = require('table');
+let secondCounter = 0;
+const lifeCounter = ['Életek száma: ', '♥ ', '♥ ', '♥ ', '♥ ', '♥ '];
 
 const main = () => {
   const arr = map.generateMap();
   map.fillMapSides(arr);
+  map.creatingPlatforms(arr);
   map.addPlayer(arr);
   map.fallingPlayer(arr);
-  map.creatingPlatforms(arr);
 
   const stdin = process.stdin;
 
   stdin.setRawMode(true); // dont wait for enter
   stdin.resume(); // exit only with process.exit
   stdin.setEncoding('utf8'); // characters return
+
+  setInterval(() => {
+    secondCounter++;
+  }, 1000);
 
   setInterval(() => {
     map.printPlayer(arr);
@@ -28,7 +34,11 @@ const main = () => {
     // map.sinkMap(arr);
 
     console.log('\n balra: a, jobbra: d, ugrás fel: w, ugrás balra fel: q, ugrás jobbra fel: e kilépés: x');
-    console.log('Játékos helyzete' + map.playerObj.posX + ' ' + map.playerObj.posY); // HIBA ezt ellenőrzés miatt raktam be, de valamiért nem működik
+    console.log('Játékos helyzete X:' + map.playerObj.posX + ' y:' + map.playerObj.posY);
+    console.log('Eltelt idő: ' + secondCounter);
+    for (let i = 0; i < lifeCounter.length; i++) {
+      process.stdout.write(lifeCounter[i]);
+    }
   }, 500);
 
   stdin.on('data', (key) => {

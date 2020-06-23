@@ -30,13 +30,16 @@ const sinkMap = (arr) => { // minden elemet 2 sorral lejjebb másol
   for (let i = arr.length - 2; i > 2; i--) {
     for (let j = 0; j < arr[i].length; j++) {
       temp = arr[i - 2][j];
+      arr[i][j] = temp;
       if (temp === PLAYERSIGN) {
         arr[i][j] = EMPTYBRICK;
         playerObj.posY += 2;
         arr[playerObj.posY][playerObj.posX] = PLAYERSIGN;
-        console.log(playerObj.posY);
-      } else {
-        arr[i][j] = temp;
+        /* if (playerObj.posY = MAPHEIGHT) {
+          console.log('Vége a játéknak');
+          console.log(playerObj.posY);
+        }
+      } else { */
       }
     }
   }
@@ -56,11 +59,11 @@ const fillMapSides = (arr) => { // fill the map sides with different bricks on e
       if (i === 0) {
         arr[i][j] = TOPSIDEBRICK; // top side
       } else if (i !== 0 && j === 0) {
-        arr[i][j] = PLATFORMBRICK; //
+        arr[i][j] = PLATFORMBRICK; // left side
       } else if (i !== 0 && j === (arr[i].length - 1)) {
-        arr[i][j] = PLATFORMBRICK;
+        arr[i][j] = PLATFORMBRICK; // right side
       } else if (i === arr.length - 1) {
-        arr[i][j] = PLATFORMBRICK; // PLATFOTMBRICK INSTEAD OF BOTTOMBRICK
+        arr[i][j] = BOTTOMBRICK; // PLATFORMBRICK INSTEAD OF BOTTOMBRICK
       } else {
         arr[i][j] = EMPTYBRICK;
       }
@@ -73,11 +76,9 @@ const fillMapSides = (arr) => { // fill the map sides with different bricks on e
 }; // out of use */
 
 const printMapAxel = (arr) => {
-  // axel.clear();
+  axel.clear();
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
-      // axel.bg(0, 0, 0);
-      //  axel.fg(255, 0, 255);
       if (arr[i][j] === TOPSIDEBRICK) {
         axel.text(j + 1, i + 1, TOPSIDEBRICK);
       }
@@ -85,21 +86,21 @@ const printMapAxel = (arr) => {
         axel.text(j + 1, i + 1, EMPTYBRICK);
       }
       if (arr[i][j] === PLATFORMBRICK) {
-        //    axel.fg(255, 0, 255);
         axel.text(j + 1, i + 1, PLATFORMBRICK);
       }
       if (arr[i][j] === PLAYERSIGN) {
-        //    axel.fg(255, 0, 255);
         axel.text(j + 1, i + 1, PLAYERSIGN);
       }
+      if (arr[i][j] === BOTTOMBRICK) {
+        axel.text(j + 1, i + 1, BOTTOMBRICK);
+      }
     }
-    // axel.bg(0, 0, 0);
   }
 };
 
 const creatingPlatforms = (arr) => {
   for (let i = 2; i < arr.length; i += 2) {
-    for (let j = 1; j < arr[i].length - 1; j++) {
+    for (let j = 1; j < arr[i].length - 2; j++) {
       const k = Math.floor(Math.random() * (arr[0].length - 1) + 1);
       arr[i][k] = PLATFORMBRICK;
     }
@@ -177,23 +178,28 @@ const jumpPlayerUpRight = (arr) => { // jumping 2 brick up an 1 brick right
 };
 
 const fallingPlayer = (arr) => {
-  while (arr[playerObj.posY + 1][playerObj.posX] !== PLATFORMBRICK) {
-    playerObj.posY += 1;
-    arr[playerObj.posY][playerObj.posX] = PLAYERSIGN;
-    arr[playerObj.posY - 1][playerObj.posX] = EMPTYBRICK;
+  if (arr[playerObj.posY - 1][playerObj.posX] == BOTTOMBRICK) {
+    console.log('Game Over');
+  } else {
+    while (arr[playerObj.posY + 1][playerObj.posX] !== PLATFORMBRICK) {
+      playerObj.posY += 1;
+      arr[playerObj.posY][playerObj.posX] = PLAYERSIGN;
+      arr[playerObj.posY - 1][playerObj.posX] = EMPTYBRICK;
+    }
   }
 };
 
 const printPlayer = (arr) => {
-  for (let i = 0; i < arr.length; i++) {
+  /* for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
     //  axel.fg(255, 255, 0);
-      if (arr[i][j] === PLAYERSIGN) {
-        axel.text(j + 1, i + 1, PLAYERSIGN);
-        break;
+      if (arr[i][j] === PLAYERSIGN) { */
+
+  axel.text(playerObj.posY + 1, playerObj.posXi + 1, PLAYERSIGN);
+  /* break;
       }
     }
-  }
+  } */
 };
 
 module.exports = {
