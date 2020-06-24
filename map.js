@@ -25,7 +25,7 @@ const playerObj = {
   posX: 7,
   posY: 3
 };
-const arr = [];
+// const arr = [];
 let secondCounter = 0;
 const lifeCounter = ['Életek száma: ', '♥ ', '♥ ', '♥ ', '♥ ', '♥ '];
 
@@ -195,8 +195,10 @@ const fallingPlayer = (arr) => {
     clearInterval(sinkMapIntervalID);
     axel.clear();
     arr = [];
-    // index.mainMenu();
-    gameStart();
+    // index.mainMenu(); // ha ezt bennehagyjuk is az a hiba, hogy is not a function, pedig benne van az exportsban.
+
+    // while (lifeCounter.length !== 2) {
+    gameStart(); // }
   } else {
     if (arr[playerObj.posY + 1][playerObj.posX] !== PLATFORMBRICK) {
       playerObj.posY += 1;
