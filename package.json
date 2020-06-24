@@ -1,0 +1,27 @@
+{
+  "name": "icytower",
+  "version": "1.0.0",
+  "description": "icytower game on linux terminal written in javascript ",
+  "main": "index.js",
+  "dependencies": {
+    "axel": "^0.0.3",
+    "chalk": "^4.1.0",
+    "table": "^5.4.6",
+    "terminal-kit": "^1.35.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krivanz/IcyTower.git"
+  },
+  "keywords": [],
+  "author": "Zoltan Krivan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krivanz/IcyTower/issues"
+  },
+  "homepage": "https://github.com/krivanz/IcyTower#readme"
+}
