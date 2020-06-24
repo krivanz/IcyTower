@@ -11,11 +11,14 @@ const mainMenu = () => {
     if (arg.selectedIndex === 0) {
       console.log('Start, have fun');
       map.gameStart();
-    } else if (arg.selectedIndex === 1) {
+    }
+    /* else if (arg.selectedIndex === 1) {
       console.log(' Irányítás: ');
       console.log(' balra: a, jobbra: d, ugrás fel: w ');
       console.log(' ugrás balra fel: q, ugrás jobbra fel: e kilépés: x');
-    } else if (arg.selectedIndex === 2) {
+      mainMenu();
+    } */
+    else if (arg.selectedIndex === 2) {
       console.log('Good Bye');
       process.exit();
     }
@@ -42,3 +45,7 @@ const main = () => {
 };
 
 main();
+
+module.exports = {
+  mainMenu
+};

@@ -25,6 +25,7 @@ const playerObj = {
   posX: 7,
   posY: 3
 };
+const arr = [];
 let secondCounter = 0;
 const lifeCounter = ['Életek száma: ', '♥ ', '♥ ', '♥ ', '♥ ', '♥ '];
 
@@ -194,6 +195,7 @@ const fallingPlayer = (arr) => {
     clearInterval(sinkMapIntervalID);
     axel.clear();
     arr = [];
+    // index.mainMenu();
     gameStart();
   } else {
     if (arr[playerObj.posY + 1][playerObj.posX] !== PLATFORMBRICK) {
