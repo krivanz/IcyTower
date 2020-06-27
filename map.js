@@ -10,7 +10,6 @@ pótolni
 */
 
 const axel = require('axel');
-const index = require('./index');
 
 const MAPWIDTH = 20;
 const MAPHEIGHT = 15;
@@ -25,13 +24,75 @@ const playerObj = {
   posX: 7,
   posY: 3
 };
-// const arr = [];
+let arr = [];
 let secondCounter = 0;
 const lifeCounter = ['Életek száma: ', '♥ ', '♥ ', '♥ ', '♥ ', '♥ '];
 
 let secondCounterIntervalID;
 let sinkMapIntervalID;
 let mapDrawIntervalID;
+
+const stdinStart = () => {
+  const stdin = process.stdin;
+
+  stdin.setRawMode(true); // dont wait for enter
+  stdin.resume(); // exit only with process.exit
+  stdin.setEncoding('utf8'); // characters return
+
+  stdin.on('data', (key) => {
+    if (key === 'x') {
+      process.exit();
+    }
+    if (key === 'a') {
+      movePlayerLeft(arr);
+      console.log('\nbalra megy');
+    }
+    if (key === 'd') {
+      movePlayerRight(arr);
+      console.log('\njobbra megy');
+    }
+    if (key === 'w') {
+      jumpPlayerUp(arr);
+      console.log('\nugrás fel');
+    }
+    if (key === 'q') {
+      jumpPlayerUpLeft(arr);
+      console.log('\nugrás balra fel');
+    }
+    if (key === 'e') {
+      jumpPlayerUpRight(arr);
+      console.log('\nugrás jobbra fel');
+    }
+  });
+};
+
+const gameStart = () => {
+  arr = generateMap();
+  fillMapSides(arr);
+  creatingPlatforms(arr);
+  addPlayer(arr);
+  fallingPlayer(arr);
+
+  secondCounterIntervalID = setInterval(() => {
+    secondCounter++;
+  }, 1000);
+
+  sinkMapIntervalID = setInterval(() => {
+    // printPlayer(arr);
+    sinkMap(arr);
+    newMapRow(arr);
+    printMapAxel(arr);
+  }, 5000);
+
+  mapDrawIntervalID = setInterval(() => {
+    // axel.clear();
+    // map.printMap(arr);
+    printMapAxel(arr);
+    // printPlayer(arr);
+
+    // map.sinkMap(arr);
+  }, 500);
+};
 
 const sinkMap = (arr) => { // minden elemet 2 sorral lejjebb másol
   let temp;
@@ -195,10 +256,8 @@ const fallingPlayer = (arr) => {
     clearInterval(sinkMapIntervalID);
     axel.clear();
     arr = [];
-    // index.mainMenu(); // ha ezt bennehagyjuk is az a hiba, hogy is not a function, pedig benne van az exportsban.
-
-    // while (lifeCounter.length !== 2) {
-    gameStart(); // }
+    // index.mainMenu();
+    gameStart();
   } else {
     if (arr[playerObj.posY + 1][playerObj.posX] !== PLATFORMBRICK) {
       playerObj.posY += 1;
@@ -222,66 +281,6 @@ const printHud = () => {
   }
 };
 
-const gameStart = () => {
-  const arr = generateMap();
-  fillMapSides(arr);
-  creatingPlatforms(arr);
-  addPlayer(arr);
-  fallingPlayer(arr);
-
-  const stdin = process.stdin;
-
-  stdin.setRawMode(true); // dont wait for enter
-  stdin.resume(); // exit only with process.exit
-  stdin.setEncoding('utf8'); // characters return
-
-  secondCounterIntervalID = setInterval(() => {
-    secondCounter++;
-  }, 1000);
-
-  sinkMapIntervalID = setInterval(() => {
-    // printPlayer(arr);
-    sinkMap(arr);
-    newMapRow(arr);
-    printMapAxel(arr);
-  }, 5000);
-
-  mapDrawIntervalID = setInterval(() => {
-    // axel.clear();
-    // map.printMap(arr);
-    printMapAxel(arr);
-    // printPlayer(arr);
-
-    // map.sinkMap(arr);
-  }, 500);
-
-  stdin.on('data', (key) => {
-    if (key === 'x') {
-      process.exit();
-    }
-    if (key === 'a') {
-      movePlayerLeft(arr);
-      console.log('\nbalra megy');
-    }
-    if (key === 'd') {
-      movePlayerRight(arr);
-      console.log('\njobbra megy');
-    }
-    if (key === 'w') {
-      jumpPlayerUp(arr);
-      console.log('\nugrás fel');
-    }
-    if (key === 'q') {
-      jumpPlayerUpLeft(arr);
-      console.log('\nugrás balra fel');
-    }
-    if (key === 'e') {
-      jumpPlayerUpRight(arr);
-      console.log('\nugrás jobbra fel');
-    }
-  });
-};
-
 module.exports = {
   generateMap,
   fillMapSides,
@@ -301,5 +300,6 @@ module.exports = {
   playerObj,
   secondCounter,
   lifeCounter,
-  gameStart
+  gameStart,
+  stdinStart
 };

@@ -22,14 +22,17 @@ const mainMenu = () => {
     term.clear();
     if (arg.selectedIndex === 0) {
       console.log('Start, have fun');
+      map.stdinStart();
       map.gameStart();
+      // map.stdinStart();
     } else if (arg.selectedIndex === 1) {
       console.log(' Irányítás: ');
       console.log(' balra: a, jobbra: d, ugrás fel: w ');
       console.log(' ugrás balra fel: q, ugrás jobbra fel: e kilépés: x');
 
-      // setTimeout(() => {
-      // }, 5000);
+      setTimeout(() => {}, 10000);
+      term.clear();
+
       mainMenu();
     } else if (arg.selectedIndex === 2) {
       console.log('Good Bye');
